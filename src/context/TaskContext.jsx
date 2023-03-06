@@ -17,9 +17,36 @@ export function TaskContextProvider(props) {
     setTasks(data);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('data', JSON.stringify(tasks));
+  }, [tasks]);
+
+  function generateRandomUniqueID() {
+    const generateID = () => {
+      return Math.floor(Math.random() * 1000);
+    };
+
+    let ID = generateID();
+
+    if (tasks.length) {
+      for (let i = 0; i < tasks.length; i++) {
+        while (tasks[i].id === ID) {
+          ID = generateID();
+          i = 0;
+        }
+
+        if (i === tasks.length - 1) {
+          return ID;
+        }
+      }
+    }
+
+    return ID;
+  }
+
   function createTask(task) {
     const newTask = {
-      id: tasks.length + 1,
+      id: generateRandomUniqueID(),
       title: task.title,
       description: task.description,
     };
