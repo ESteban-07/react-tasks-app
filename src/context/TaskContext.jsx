@@ -14,7 +14,7 @@ export function TaskContextProvider(props) {
   // Cuando el componente sea creado, asigna los datos a la variable tasks
   // la cual fue asignada iniciarlmente a un array vacío []
   useEffect(() => {
-    setTasks(data);
+    setTasks(JSON.parse(localStorage.getItem('data')) || data);
   }, []);
 
   useEffect(() => {
